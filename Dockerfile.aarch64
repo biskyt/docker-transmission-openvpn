@@ -5,7 +5,9 @@ VOLUME /data
 VOLUME /config
 
 ENV DOCKERIZE_VERSION=v0.6.1
-RUN apk --no-cache add bash dumb-init ip6tables ufw openvpn shadow transmission-daemon \
+RUN apk -U upgrade \
+    && echo "@testing http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+    && apk --no-cache add bash dumb-init ip6tables ufw@testing openvpn shadow transmission-daemon \
     && echo "Install dockerize $DOCKERIZE_VERSION" \
     && wget -qO- https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-armhf-$DOCKERIZE_VERSION.tar.gz | tar xz -C /usr/bin \
     && mkdir -p /opt/transmission-ui \
